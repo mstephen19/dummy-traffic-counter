@@ -15,15 +15,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/', async (req, res) => {
-    if (!(await Count.findByPk(req.ip))) {
-        await Count.create({ ip: req.ip });
+    const ip = req.connection.remoteAddress ?? req.ip;
+
+    if (!(await Count.findByPk(ip))) {
+        await Count.create({ ip });
     }
 
     res.send(`<center>
 <h1>Number of unique page-views (one IP address = one page-view)</h1>
 <img src="https://i.imgflip.com/vgyft.jpg" alt="WOODY GOODY"/>
 <p style="font-size: 20rem; margin: 0">${await Count.count()}</p>
-<p>Your IP: ${req.ip}</p>
+<p>Your IP: ${ip}</p>
 </center>`);
 });
 
