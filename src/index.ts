@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/', async (req, res) => {
-    const ip = req.connection.remoteAddress ?? req.ip;
+    const { ip } = req;
 
     if (!(await Count.findByPk(ip))) {
         await Count.create({ ip });
