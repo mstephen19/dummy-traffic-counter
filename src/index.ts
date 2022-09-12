@@ -29,7 +29,7 @@ app.get('/', async (req, res) => {
 </center>`);
 });
 
-app.get('/reset', async (_, res) => {
+app.delete('/reset', async (_, res) => {
     try {
         await Count.destroy({
             where: {},
